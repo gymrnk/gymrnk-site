@@ -1,12 +1,24 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'GymRNK - Compete, Train, Dominate',
   description: 'The social fitness app where you compete with friends, track workouts, and dominate the leaderboards.',
-  keywords: 'fitness app, gym ranking, workout tracker, fitness competition, social fitness',
+  keywords: [
+    'fitness app',
+    'gym ranking',
+    'workout tracker',
+    'fitness competition',
+    'social fitness',
+    'exercise tracker',
+    'gym leaderboard',
+    'fitness challenges',
+    'workout competition',
+    'strength training app'
+  ],
   openGraph: {
     title: 'GymRNK - Compete, Train, Dominate',
     description: 'The social fitness app where you compete with friends',
@@ -49,6 +61,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="overflow-x-hidden">
       <body className="bg-white text-gym-black overflow-x-hidden">
+      <GoogleAnalytics />
         <Header />
         <main className="min-h-screen overflow-x-hidden">
           {children}
