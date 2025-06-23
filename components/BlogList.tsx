@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { format } from 'date-fns'
-import { urlForImage } from '@/lib/sanity.image'
+import { urlFor } from '@/sanity/lib/image'
 import { Post } from '@/types'
 
 export default function BlogList({ posts }: { posts: Post[] }) {

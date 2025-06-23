@@ -1,5 +1,5 @@
-import { client } from '@/lib/sanity.client'
-import { urlForImage } from '@/lib/sanity.image'
+import { client } from '@/sanity/lib/client'
+import { urlFor } from '@/sanity/lib/image'
 import { format } from 'date-fns'
 import { PortableText } from '@portabletext/react'
 import { Post } from '@/types'
