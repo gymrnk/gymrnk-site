@@ -20,7 +20,7 @@ export default function BlogList({ posts }: { posts: Post[] }) {
             <div className="relative aspect-[16/9] mb-4 overflow-hidden rounded-xl bg-gym-gray-100">
               {post.mainImage ? (
                 <img
-                  src={urlForImage(post.mainImage).width(800).height(450).url()}
+                  src={urlFor(post.mainImage).width(800).height(450).url()}
                   alt={post.title}
                   className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
                 />
