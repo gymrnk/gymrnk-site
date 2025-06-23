@@ -62,7 +62,7 @@ export default function Footer() {
         </div>
         
         <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-gym-gray-200 text-center text-gym-gray-600 px-4">
-          <p className="text-sm md:text-base">&copy; 2024 GymRNK. All rights reserved.</p>
+          <p className="text-sm md:text-base">&copy; 2025 GymRNK. All rights reserved.</p>
         </div>
       </div>
     </footer>

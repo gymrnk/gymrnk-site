@@ -1,4 +1,3 @@
-
 'use client'
 
 import { useState } from 'react'
@@ -19,8 +18,8 @@ export default function AppShowcase() {
       alt: 'GymRNK Workout Logging'
     },
     {
-      type: 'gif',
-      src: '/showcase/ranking-demo.gif',
+      type: 'video',
+      src: '/showcase/ranking-demo.webm',
       alt: 'GymRNK Live Rankings Demo'
     },
     {
@@ -43,102 +42,172 @@ export default function AppShowcase() {
     setCurrentSlide((prev) => (prev - 1 + showcaseItems.length) % showcaseItems.length)
   }
 
+  const renderMedia = (item, className = "") => {
+    if (item.type === 'video') {
+      return (
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className={`absolute inset-0 w-full h-full object-cover bg-white ${className}`}
+        >
+          <source src={item.src} type="video/webm" />
+        </video>
+      )
+    }
+    return (
+      <Image
+        src={item.src}
+        alt={item.alt}
+        fill
+        className={`object-cover object-center bg-white ${className}`}
+        unoptimized={item.type === 'gif'}
+      />
+    )
+  }
+
+  // iPhone 16 Pro Max Frame Component
+  const IPhoneFrame = ({ children, scale = 1, screenHeight = 680 }) => {
+    const screenWidth = 305 * scale
+    const actualScreenHeight = screenHeight * scale
+    const framePadding = 10 * scale
+    const frameWidth = screenWidth + (framePadding * 2)
+    const frameHeight = actualScreenHeight + (framePadding * 2) + (35 * scale) // Extra space for Dynamic Island
+    
+    return (
+      <div className="relative" style={{ width: `${frameWidth}px`, height: `${frameHeight}px` }}>
+        {/* Phone Frame - Titanium finish */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 rounded-[2.5rem] shadow-2xl" 
+             style={{ boxShadow: '0 20px 50px -10px rgba(0, 0, 0, 0.5)' }}>
+          {/* Inner Frame Border */}
+          <div className="absolute inset-[2px] bg-black rounded-[2.4rem] overflow-hidden">
+            {/* Dynamic Island - Smaller size */}
+            <div 
+              className="absolute left-1/2 transform -translate-x-1/2 bg-black rounded-full z-50" 
+              style={{ 
+                top: `${10 * scale}px`,
+                width: `${65 * scale}px`, 
+                height: `${20 * scale}px` 
+              }}
+            ></div>
+            {/* Screen Container */}
+            <div 
+              className="absolute bg-black"
+              style={{
+                top: `${framePadding}px`,
+                left: `${framePadding}px`,
+                right: `${framePadding}px`,
+                bottom: `${framePadding}px`,
+              }}
+            >
+              {/* Actual Screen */}
+              <div 
+                className="relative w-full rounded-[1.8rem] overflow-hidden bg-white"
+                style={{ 
+                  height: `${actualScreenHeight}px`,
+                  marginTop: `${25 * scale}px`, // Space for Dynamic Island
+                  boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.1)'
+                }}
+              >
+                {children}
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Action Button (left side) */}
+        <div className="absolute left-[-3px] top-[30%] w-[3px] h-[35px] bg-gradient-to-b from-gray-700 to-gray-800 rounded-r-sm"></div>
+        {/* Volume Buttons */}
+        <div className="absolute left-[-3px] top-[40%] w-[3px] h-[30px] bg-gradient-to-b from-gray-700 to-gray-800 rounded-r-sm"></div>
+        <div className="absolute left-[-3px] top-[48%] w-[3px] h-[30px] bg-gradient-to-b from-gray-700 to-gray-800 rounded-r-sm"></div>
+        {/* Power Button */}
+        <div className="absolute right-[-3px] top-[40%] w-[3px] h-[60px] bg-gradient-to-b from-gray-700 to-gray-800 rounded-l-sm"></div>
+      </div>
+    )
+  }
+
   return (
     <>
-      {/* Desktop View - Curved Gallery */}
-      <div className="hidden md:block mt-20 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-gym-blue/20 to-purple-500/20 blur-3xl" />
+      {/* Desktop View - Elegant Flat Gallery */}
+      <div className="hidden md:block mt-16 relative">
+        {/* Subtle gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-50/30 to-transparent blur-3xl" />
         
         <div className="relative">
-          {/* 3D Curved Container */}
-          <div className="flex items-center justify-center perspective-1000">
-            <div className="flex items-center gap-4 transform-style-3d">
+          {/* Flat Gallery Container */}
+          <div className="flex items-center justify-center">
+            <div className="flex items-center gap-6">
               
-              {/* Left Images */}
-              <div className="transform -rotate-y-25 translate-z-[-100px] opacity-80 hover:opacity-100 transition-all duration-300">
-                <div className="relative w-56 h-[480px] rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src={showcaseItems[0].src}
-                    alt={showcaseItems[0].alt}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
+              {/* Far Left - Smallest */}
+              <div className="transform transition-all duration-500 hover:scale-105"
+                   style={{ 
+                     opacity: 0.6,
+                     filter: 'brightness(0.85)'
+                   }}>
+                <IPhoneFrame scale={0.52} screenHeight={680}>
+                  {renderMedia(showcaseItems[0])}
+                </IPhoneFrame>
               </div>
               
-              <div className="transform -rotate-y-15 translate-z-[-50px] opacity-90 hover:opacity-100 transition-all duration-300">
-                <div className="relative w-64 h-[550px] rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src={showcaseItems[1].src}
-                    alt={showcaseItems[1].alt}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
+              {/* Left - Small */}
+              <div className="transform transition-all duration-500 hover:scale-105"
+                   style={{ 
+                     opacity: 0.75,
+                     filter: 'brightness(0.9)',
+                     marginLeft: '-16px',
+                     marginRight: '-16px'
+                   }}>
+                <IPhoneFrame scale={0.64} screenHeight={680}>
+                  {renderMedia(showcaseItems[1])}
+                </IPhoneFrame>
               </div>
               
-              {/* Center GIF */}
-              <div className="transform translate-z-0 scale-110 z-10">
-                <div className="relative w-[300px]">
-                  {/* iPhone Frame */}
-                  <div className="relative">
-                    {/* Phone Frame */}
-                    <div className="absolute inset-0 bg-black rounded-[3rem] shadow-2xl"></div>
-                    {/* Screen Bezel */}
-                    <div className="absolute inset-[3px] bg-gray-900 rounded-[2.8rem]"></div>
-                    {/* Dynamic Island */}
-                    <div className="absolute top-[20px] left-1/2 transform -translate-x-1/2 w-[120px] h-[35px] bg-black rounded-full z-20"></div>
-                    {/* Screen Area */}
-                    <div className="relative bg-white rounded-[2.5rem] p-[14px] shadow-inner">
-                      <div className="relative w-full h-[640px] rounded-[2.2rem] overflow-hidden bg-gray-100">
-                        <Image
-                          src={showcaseItems[2].src}
-                          alt={showcaseItems[2].alt}
-                          fill
-                          className="object-cover object-center"
-                          unoptimized={showcaseItems[2].type === 'gif'}
-                        />
-                      </div>
-                    </div>
-                    {/* Side Buttons */}
-                    <div className="absolute right-[-2px] top-[120px] w-[3px] h-[60px] bg-gray-800 rounded-l-sm"></div>
-                    <div className="absolute left-[-2px] top-[100px] w-[3px] h-[30px] bg-gray-800 rounded-r-sm"></div>
-                    <div className="absolute left-[-2px] top-[140px] w-[3px] h-[50px] bg-gray-800 rounded-r-sm"></div>
-                    <div className="absolute left-[-2px] top-[200px] w-[3px] h-[50px] bg-gray-800 rounded-r-sm"></div>
-                  </div>
-                </div>
+              {/* Center - Largest with emphasis */}
+              <div className="transform transition-all duration-500 z-20"
+                   style={{ 
+                     filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15))'
+                   }}>
+                <IPhoneFrame scale={0.8} screenHeight={680}>
+                  {renderMedia(showcaseItems[2])}
+                </IPhoneFrame>
               </div>
               
-              {/* Right Images */}
-              <div className="transform rotate-y-15 translate-z-[-50px] opacity-90 hover:opacity-100 transition-all duration-300">
-                <div className="relative w-64 h-[550px] rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src={showcaseItems[3].src}
-                    alt={showcaseItems[3].alt}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
+              {/* Right - Small */}
+              <div className="transform transition-all duration-500 hover:scale-105"
+                   style={{ 
+                     opacity: 0.75,
+                     filter: 'brightness(0.9)',
+                     marginLeft: '-16px',
+                     marginRight: '-16px'
+                   }}>
+                <IPhoneFrame scale={0.64} screenHeight={680}>
+                  {renderMedia(showcaseItems[3])}
+                </IPhoneFrame>
               </div>
               
-              <div className="transform rotate-y-25 translate-z-[-100px] opacity-80 hover:opacity-100 transition-all duration-300">
-                <div className="relative w-56 h-[480px] rounded-xl overflow-hidden shadow-2xl">
-                  <Image
-                    src={showcaseItems[4].src}
-                    alt={showcaseItems[4].alt}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
+              {/* Far Right - Smallest */}
+              <div className="transform transition-all duration-500 hover:scale-105"
+                   style={{ 
+                     opacity: 0.6,
+                     filter: 'brightness(0.85)'
+                   }}>
+                <IPhoneFrame scale={0.52} screenHeight={680}>
+                  {renderMedia(showcaseItems[4])}
+                </IPhoneFrame>
               </div>
               
             </div>
           </div>
           
-          {/* Caption */}
-          <p className="text-center mt-8 text-gym-gray-600">
-            Experience real-time rankings and compete with friends
-          </p>
+          {/* Caption - Apple style */}
+          <div className="text-center mt-16">
+            <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+              Real-time rankings
+            </h3>
+            <p className="text-lg text-gray-600 font-normal">
+              Compete with friends and track your progress
+            </p>
+          </div>
         </div>
       </div>
 
@@ -153,31 +222,50 @@ export default function AppShowcase() {
                  style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
               {showcaseItems.map((item, index) => (
                 <div key={index} className="w-full flex-shrink-0 px-8">
-                  <div className="relative w-[240px] mx-auto">
-                    <div className="relative">
-                      {/* Phone Frame */}
-                      <div className="absolute inset-0 bg-black rounded-[2.5rem] shadow-2xl"></div>
-                      {/* Screen Bezel */}
-                      <div className="absolute inset-[2.5px] bg-gray-900 rounded-[2.3rem]"></div>
-                      {/* Dynamic Island */}
-                      <div className="absolute top-[15px] left-1/2 transform -translate-x-1/2 w-[90px] h-[28px] bg-black rounded-full z-20"></div>
-                      {/* Screen Area */}
-                      <div className="relative bg-white rounded-[2.1rem] p-[11px] shadow-inner">
-                        <div className="relative w-full h-[480px] rounded-[1.9rem] overflow-hidden bg-white">
-                          <Image
-                            src={item.src}
-                            alt={item.alt}
-                            fill
-                            className="object-cover object-center"
-                            unoptimized={item.type === 'gif'}
-                            quality={100}
-                          />
+                  <div className="relative mx-auto w-fit">
+                    {/* Mobile iPhone Frame */}
+                    <div className="relative" style={{ width: '280px', height: '560px' }}>
+                      {/* Phone Frame - Titanium finish */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 rounded-[2.2rem] shadow-2xl" 
+                           style={{ boxShadow: '0 15px 40px -8px rgba(0, 0, 0, 0.5)' }}>
+                        {/* Inner Frame Border */}
+                        <div className="absolute inset-[2px] bg-black rounded-[2.1rem] overflow-hidden">
+                          {/* Dynamic Island - Smaller */}
+                          <div className="absolute top-[9px] left-1/2 transform -translate-x-1/2 w-[55px] h-[16px] bg-black rounded-full z-50"></div>
+                          {/* Screen Container */}
+                          <div className="absolute top-[10px] left-[10px] right-[10px] bottom-[10px] bg-black">
+                            {/* Actual Screen */}
+                            <div className="relative w-full h-[510px] rounded-[1.6rem] overflow-hidden bg-white mt-[23px]" 
+                                 style={{ boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.1)' }}>
+                              {item.type === 'video' ? (
+                                <video
+                                  autoPlay
+                                  loop
+                                  muted
+                                  playsInline
+                                  className="absolute inset-0 w-full h-full object-cover bg-white"
+                                >
+                                  <source src={item.src} type="video/webm" />
+                                </video>
+                              ) : (
+                                <Image
+                                  src={item.src}
+                                  alt={item.alt}
+                                  fill
+                                  className="object-cover object-center bg-white"
+                                  unoptimized={item.type === 'gif'}
+                                  quality={100}
+                                />
+                              )}
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      {/* Side Buttons */}
-                      <div className="absolute right-[-2px] top-[100px] w-[3px] h-[50px] bg-gray-800 rounded-l-sm"></div>
-                      <div className="absolute left-[-2px] top-[80px] w-[3px] h-[25px] bg-gray-800 rounded-r-sm"></div>
-                      <div className="absolute left-[-2px] top-[115px] w-[3px] h-[40px] bg-gray-800 rounded-r-sm"></div>
+                      {/* Mobile Frame Buttons */}
+                      <div className="absolute left-[-2px] top-[25%] w-[2px] h-[25px] bg-gradient-to-b from-gray-700 to-gray-800 rounded-r-sm"></div>
+                      <div className="absolute left-[-2px] top-[35%] w-[2px] h-[20px] bg-gradient-to-b from-gray-700 to-gray-800 rounded-r-sm"></div>
+                      <div className="absolute left-[-2px] top-[42%] w-[2px] h-[20px] bg-gradient-to-b from-gray-700 to-gray-800 rounded-r-sm"></div>
+                      <div className="absolute right-[-2px] top-[35%] w-[2px] h-[45px] bg-gradient-to-b from-gray-700 to-gray-800 rounded-l-sm"></div>
                     </div>
                   </div>
                 </div>
@@ -189,7 +277,7 @@ export default function AppShowcase() {
           <div className="flex items-center justify-center gap-4 mt-6">
             <button
               onClick={prevSlide}
-              className="p-3 rounded-full bg-gym-gray-100 hover:bg-gym-gray-200 transition-colors"
+              className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
               aria-label="Previous image"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -204,7 +292,7 @@ export default function AppShowcase() {
                   key={index}
                   onClick={() => setCurrentSlide(index)}
                   className={`w-2 h-2 rounded-full transition-all ${
-                    currentSlide === index ? 'bg-gym-black w-6' : 'bg-gym-gray-300'
+                    currentSlide === index ? 'bg-gray-900 w-6' : 'bg-gray-300'
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
@@ -213,7 +301,7 @@ export default function AppShowcase() {
             
             <button
               onClick={nextSlide}
-              className="p-3 rounded-full bg-gym-gray-100 hover:bg-gym-gray-200 transition-colors"
+              className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
               aria-label="Next image"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -223,11 +311,11 @@ export default function AppShowcase() {
           </div>
           
           {/* Caption */}
-          <p className="text-center mt-4 text-sm text-gym-gray-600 px-8">
+          <p className="text-center mt-4 text-sm text-gray-600 px-8">
             Swipe to explore GymRNK features
           </p>
         </div>
       </div>
     </>
   )
-} 
+}
