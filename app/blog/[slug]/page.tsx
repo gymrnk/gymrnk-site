@@ -27,8 +27,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      images: post.mainImage ? [urlForImage(post.mainImage).width(1200).height(630).url()] : [],
-    },
+      images: post.mainImage ? [urlFor(post.mainImage).width(1200).height(630).url()] : [],
+        },
   }
 }
 
@@ -55,7 +55,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
           {post.mainImage && (
             <div className="relative aspect-[16/9] mb-12 overflow-hidden rounded-2xl">
               <img
-                src={urlForImage(post.mainImage).width(1200).height(675).url()}
+src={urlFor(post.mainImage).width(1200).height(675).url()}
                 alt={post.title}
                 className="object-cover w-full h-full"
               />
