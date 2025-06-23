@@ -1,0 +1,50 @@
+.
+├── app
+│   ├── blog
+│   │   ├── [slug]
+│   │   │   └── page.tsx
+│   │   └── page.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── studio
+│       └── [[...tool]]
+│           └── page.tsx
+├── components
+│   ├── BlogList.tsx
+│   ├── DownloadCTA.tsx
+│   ├── Features.tsx
+│   ├── Footer.tsx
+│   ├── Header.tsx
+│   ├── Hero.tsx
+│   └── Testimonials.tsx
+├── lib
+│   ├── sanity.client.ts
+│   └── sanity.image.ts
+├── next.config.js
+├── package-lock.json
+├── package.json
+├── pages
+│   └── api
+│       └── revalidate.ts
+├── sanity
+│   ├── env.ts
+│   ├── lib
+│   │   ├── client.ts
+│   │   ├── image.ts
+│   │   └── live.ts
+│   ├── schemaTypes
+│   │   ├── authorType.ts
+│   │   ├── blockContentType.ts
+│   │   ├── categoryType.ts
+│   │   ├── index.ts
+│   │   └── postType.ts
+│   └── structure.ts
+├── sanity.cli.ts
+├── sanity.config.ts
+├── tailwind.config.js
+├── tree.txt
+└── types
+    └── index.ts
+
+14 directories, 34 files
