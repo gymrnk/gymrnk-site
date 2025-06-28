@@ -3,6 +3,7 @@ import './globals.css'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { WaitlistProvider } from '@/components/WaitlistProvider'
 
 export const metadata: Metadata = {
   title: 'GymRNK - Compete, Train, Dominate',
@@ -61,12 +62,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="overflow-x-hidden">
       <body className="bg-white text-gym-black overflow-x-hidden">
-      <GoogleAnalytics />
-        <Header />
-        <main className="min-h-screen overflow-x-hidden">
-          {children}
-        </main>
-        <Footer />
+        <GoogleAnalytics />
+        <WaitlistProvider>
+          <Header />
+          <main className="min-h-screen overflow-x-hidden">
+            {children}
+          </main>
+          <Footer />
+        </WaitlistProvider>
       </body>
     </html>
   )

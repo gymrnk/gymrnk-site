@@ -27,6 +27,7 @@
 │   ├── Hero.tsx
 │   ├── StructuredData.tsx
 │   └── Testimonials.tsx
+├── file-tree.txt
 ├── lib
 ├── next-env.d.ts
 ├── next-sitemap.config.js
@@ -61,7 +62,6 @@
 ├── sanity.cli.ts
 ├── sanity.config.ts
 ├── tailwind.config.js
-├── tree.txt
 ├── tsconfig.json
 ├── types
 │   └── index.ts
