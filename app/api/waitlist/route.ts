@@ -1,5 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { client } from '@/sanity/lib/client'
+import { createClient } from '@sanity/client'
+
+// Create a client with write permissions
+const writeClient = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  apiVersion: '2024-01-01',
+  token: process.env.SANITY_API_WRITE_TOKEN,
+  useCdn: false,
+})
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,7 +32,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if email already exists in waitlist
-    const existingSignup = await client.fetch(
+    const existingSignup = await writeClient.fetch(
       `*[_type == "waitlist" && email == $email][0]`,
       { email }
     )
@@ -36,7 +45,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Save to Sanity
-    const result = await client.create({
+    const result = await writeClient.create({
       _type: 'waitlist',
       firstName,
       email,
